@@ -1,6 +1,19 @@
-// document.querySelector("button").addEventListener("click", () => {
-//     console.log("clicked");
-// });
+let dialog = document.querySelector("dialog");
+let bookTitle = document.querySelector("input#title")
+
+document.querySelector("button").addEventListener("click", () => {
+    dialog.showModal();
+});
+
+document.querySelector("form button").addEventListener("click", () => {
+    let title = document.querySelector("#title").value;
+    let author = document.querySelector("#author").value;
+    let pages = document.querySelector("#pages").value;
+    let read = document.querySelector("#read").value;
+
+    let book = new Book(title, author, pages, read);
+    addBookToLibrary(book);
+})
 
 let library = [];
 
@@ -17,25 +30,11 @@ function addBookToLibrary(object) {
 
 let alchemist = new Book("The Alchemist", "Paul Coelho", 163, "Not read");
 
-console.log(library);
-
 addBookToLibrary(alchemist);
-
-console.log(library);
 
 let quran = new Book("Al-Qur'an", "Allah", 604, "Read");
 
 addBookToLibrary(quran);
-
-console.log(library);
-
-//hot to create 1 card
-//how to create 1 card with title, author, pages & status
-
-//how to create multiple card based off of library length
-
-//how to display 1 book inside card?
-//how to display 2 books inside card?
 
 let main = document.querySelector("main");
 
@@ -63,12 +62,4 @@ library.forEach((obj) => {
     main.appendChild(card);
 })
 
-
-
-
-
-
-// library.forEach((book) => {
-//     console.log(book.name);
-//     console.log(book.pages)
-// })
+//how to display this over and overg
