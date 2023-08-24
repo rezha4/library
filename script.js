@@ -1,12 +1,11 @@
 let dialog = document.querySelector("dialog");
 let bookTitle = document.querySelector("input#title");
 let main = document.querySelector("main");
+let library = [];
 
 document.querySelector("button").addEventListener("click", () => {
     dialog.showModal();
 });
-
-let library = [];
 
 document.querySelector("form button").addEventListener("click", () => {
     removeAllChildNodes(main);
@@ -16,11 +15,20 @@ document.querySelector("form button").addEventListener("click", () => {
     let pages = document.querySelector("#pages").value;
     let read = document.querySelector("#read").value;
 
-    let book = new Book(title, author, pages, read);
+    let book = new Book(title, author, pages, read, library.length);
     addBookToLibrary(book);
 
     displayBooks(library);
+
+    let delbut = document.querySelectorAll("#deleteButton");
+
+    delbut.forEach((button) => {
+        button.addEventListener("click", () => {
+            removeThis(button.getAttribute("value"));
+            removeAllChildNodes(main);
+    })
 })
+});
 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
@@ -28,13 +36,12 @@ function removeAllChildNodes(parent) {
     }
 }
 
-
-
-function Book(title, author, pages, readStatus) {
+function Book(title, author, pages, readStatus, index) {
     this.title = title;
-    this.author = author,
-    this.pages = pages,
-    this.readStatus = readStatus
+    this.author = author;
+    this.pages = pages;
+    this.readStatus = readStatus;
+    this.index = index;
 }
 
 function addBookToLibrary(object) {
@@ -56,13 +63,23 @@ function displayBooks(array) {
     
         let readStatus = document.createElement("p");
         readStatus.textContent = `Read status: ${obj.readStatus}`;
+
+        let deleteButton = document.createElement("button");
+        deleteButton.setAttribute("id", "deleteButton");
+        deleteButton.setAttribute("value", `${obj.index}`)
+        deleteButton.textContent = "Delete";
     
         card.appendChild(title);
         card.appendChild(author);
         card.appendChild(pages);
         card.appendChild(readStatus);
+        card.appendChild(deleteButton);
     
         card.classList.add("card");
         main.appendChild(card);
-    })
+    });
+}
+
+function removeThis (posInArray) {
+    library.splice(posInArray, 1);
 }
