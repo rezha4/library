@@ -41,14 +41,6 @@ function addBookToLibrary(object) {
     library.push(object);
 }
 
-let alchemist = new Book("The Alchemist", "Paul Coelho", 163, "Not read");
-
-addBookToLibrary(alchemist);
-
-let quran = new Book("Al-Qur'an", "Allah", 604, "Read");
-
-addBookToLibrary(quran);
-
 function displayBooks(array) {
     array.forEach((obj) => {
         let card = document.createElement("div");
@@ -74,30 +66,3 @@ function displayBooks(array) {
         main.appendChild(card);
     })
 }
-
-
-
-// function displayBook (title, author, pages, read) {
-//     let card = document.createElement("div");
-
-//     let title = document.createElement("p");
-//     title.textContent = `Title: ${title}`;
-
-//     let author = document.createElement("p");
-//     author.textContent = `Author: ${author}`;
-
-//     let pages = document.createElement("p");
-//     pages.textContent = `Pages: ${pages}`;
-
-//     let readStatus = document.createElement("p");
-//     readStatus.textContent = `Read status: ${read}`;
-
-//     card.appendChild(title);
-//     card.appendChild(author);
-//     card.appendChild(pages);
-//     card.appendChild(readStatus);
-
-//     card.classList.add("card");
-//     main.appendChild(card);
-// }
-//how to display this over and overg
