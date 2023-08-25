@@ -17,17 +17,7 @@ document.querySelector("form button").addEventListener("click", () => {
 
     let book = new Book(title, author, pages, read, library.length);
     addBookToLibrary(book);
-
     displayBooks(library);
-
-    let delbut = document.querySelectorAll("#deleteButton");
-
-    delbut.forEach((button) => {
-        button.addEventListener("click", () => {
-            removeThis(button.getAttribute("value"));
-            removeAllChildNodes(main);
-    })
-})
 });
 
 function removeAllChildNodes(parent) {
@@ -48,6 +38,16 @@ function addBookToLibrary(object) {
     library.push(object);
 }
 
+function removeThis (posInArray) {
+    index = library.findIndex(obj => obj.index == parseInt(`${posInArray}`));
+
+    console.log(index);
+
+    library.splice(index, 1);
+    removeAllChildNodes(main);
+    displayBooks(library);
+}
+
 function displayBooks(array) {
     array.forEach((obj) => {
         let card = document.createElement("div");
@@ -66,7 +66,8 @@ function displayBooks(array) {
 
         let deleteButton = document.createElement("button");
         deleteButton.setAttribute("id", "deleteButton");
-        deleteButton.setAttribute("value", `${obj.index}`)
+        deleteButton.setAttribute("value", `${obj.index}`);
+        deleteButton.setAttribute("onclick", "removeThis(`${value}`)");
         deleteButton.textContent = "Delete";
     
         card.appendChild(title);
@@ -78,8 +79,4 @@ function displayBooks(array) {
         card.classList.add("card");
         main.appendChild(card);
     });
-}
-
-function removeThis (posInArray) {
-    library.splice(posInArray, 1);
 }
