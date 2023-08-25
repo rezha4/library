@@ -13,7 +13,7 @@ document.querySelector("form button").addEventListener("click", () => {
     let title = document.querySelector("#title").value;
     let author = document.querySelector("#author").value;
     let pages = document.querySelector("#pages").value;
-    let read = document.querySelector("#read").value;
+    let read = document.querySelector("#read").checked;
 
     let book = new Book(title, author, pages, read, library.length);
     addBookToLibrary(book);
@@ -38,12 +38,23 @@ function addBookToLibrary(object) {
     library.push(object);
 }
 
-function removeThis (posInArray) {
-    index = library.findIndex(obj => obj.index == parseInt(`${posInArray}`));
-
-    console.log(index);
+function removeThis (bookName) {
+    index = library.findIndex(obj => obj.title == bookName);
 
     library.splice(index, 1);
+    removeAllChildNodes(main);
+    displayBooks(library);
+}
+
+function changeReadStatus (bookName) {
+    index = library.findIndex(obj => obj.title == bookName);
+
+    if (library[index].readStatus === false) {
+        library[index].readStatus = true;
+    } else {
+        library[index].readStatus = false;
+    }
+
     removeAllChildNodes(main);
     displayBooks(library);
 }
@@ -63,11 +74,15 @@ function displayBooks(array) {
     
         let readStatus = document.createElement("p");
         readStatus.textContent = `Read status: ${obj.readStatus}`;
+        let changeReadStatusButton = document.createElement("button");
+        changeReadStatusButton.textContent = "Change Read Status";
+        changeReadStatusButton.setAttribute("value", `${obj.title}`)
+        changeReadStatusButton.setAttribute("onclick", "changeReadStatus(value)");
 
         let deleteButton = document.createElement("button");
         deleteButton.setAttribute("id", "deleteButton");
-        deleteButton.setAttribute("value", `${obj.index}`);
-        deleteButton.setAttribute("onclick", "removeThis(`${value}`)");
+        deleteButton.setAttribute("value", `${obj.title}`);
+        deleteButton.setAttribute("onclick", "removeThis(value)");
         deleteButton.textContent = "Delete";
     
         card.appendChild(title);
@@ -75,6 +90,7 @@ function displayBooks(array) {
         card.appendChild(pages);
         card.appendChild(readStatus);
         card.appendChild(deleteButton);
+        card.appendChild(changeReadStatusButton);
     
         card.classList.add("card");
         main.appendChild(card);
